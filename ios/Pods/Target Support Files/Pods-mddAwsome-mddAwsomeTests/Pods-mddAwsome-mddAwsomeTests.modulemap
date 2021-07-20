@@ -1,0 +1,6 @@
+module Pods_mddAwsome_mddAwsomeTests {
+  umbrella header "Pods-mddAwsome-mddAwsomeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

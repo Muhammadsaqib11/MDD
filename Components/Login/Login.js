@@ -32,18 +32,19 @@ function loginScreen({ navigation }) {
   //     }, 1000);
   //   }
   // }
-  const SignIn = () => {
-    Auth.signIn({
-      username: 'hamid@mdd.io',
-      password: 'Changeme123',
-    })
-      .then(res => {
-        console.log('succes for login', res);
-      })
-      .catch(err => {
-        console.log('error for signIn', err);
-      });
-  };
+
+
+  // const SignIn = () => {
+  //   Auth.signIn({
+  //     username: 'hamid@mdd.io',
+  //     password: 'Changeme123',  //   })
+  //     .then(res => {
+  //       console.log('succes for login', res);
+  //     })
+  //     .catch(err => {
+  //       console.log('error for signIn', err);
+  //     });
+  // };
   return (
     <View style={Loginstyles.mainViewContainer}>
       <View style={Loginstyles.mainView}>
@@ -69,7 +70,7 @@ function loginScreen({ navigation }) {
             />
           </Item>
           <Text style={{ color: 'red' }}>{passwordError}</Text>
-          <Button style={Loginstyles.loginButton} onPress={SignIn}>
+          <Button style={Loginstyles.loginButton} onPress={() => { navigation.navigate("Home") }}>
             <Text>SIGN IN</Text>
           </Button>
         </Form>

@@ -54,13 +54,13 @@ const HomeScreen = ({ navigation }) => {
       </View>
     </View>
   )
-  const renderHeader = () => (
-    <View style={HomeStyle.header}>
-      <View style={HomeStyle.panelHeader}>
-        <View style={HomeStyle.panelHandle} />
-      </View>
-    </View>
-  )
+  // const renderHeader = () => (
+  //   <View style={HomeStyle.header}>
+  //     <View style={HomeStyle.panelHeader}>
+  //       <View style={HomeStyle.panelHandle} />
+  //     </View>
+  //   </View>
+  // )
   const bs = React.createRef()
 
   const RenderItem = ({ item, onPress, backgroundColor, textColor }) => (
@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
         ref={bs}
         snapPoints={Platform.OS === "ios" ? [800, 385, 385] : [650, 300, 300]}
         renderContent={renderInner}
-        renderHeader={renderHeader}
+        // renderHeader={renderHeader}
         initialSnap={1}
         enabledContentGestureInteraction={false}
       />

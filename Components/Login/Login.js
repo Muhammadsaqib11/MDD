@@ -13,8 +13,9 @@ function loginScreen({ navigation }) {
   const [passwordError, setPasswordError] = useState('');
   const dispatch = useDispatch()
   const reduxData = useSelector((state) => state)
-  // const handleSubmit = () => {
 
+
+  // const handleSubmit = () => {
   //   if (username === '') {
   //     console.log("if")
   //     setUsernameError("Please Enter User Name")

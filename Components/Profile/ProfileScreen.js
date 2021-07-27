@@ -21,7 +21,7 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.panel}>
       <View style={styles.BotomSheetHeaderView}>
         <Text style={styles.BotomSheetHeader}>Select Organization</Text>
-        <Picker
+        {/* <Picker
           mode="dropdown"
           iosIcon={<Ionicons name="arrow-down" size={20} color='gray' style={HomeStyle.Car_style} />}
           selectedValue={selecttedvValue}
@@ -32,7 +32,7 @@ const ProfileScreen = ({ navigation }) => {
           <Picker.Item label="Debit Card" value="key2" />
           <Picker.Item label="Credit Card" value="key3" />
           <Picker.Item label="Net Banking" value="key4" />
-        </Picker>
+        </Picker> */}
       </View>
 
 

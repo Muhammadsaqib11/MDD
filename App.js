@@ -11,25 +11,38 @@ import AssetsScreen from "./Components/AssetsScreen/AssetsScreen";
 import ProfileScreen from "./Components/Profile/ProfileScreen";
 import { Provider } from "react-redux";
 import store from "./Store";
-import Amplify from "aws-amplify";
-import {
-  withAuthenticator,
-  AmplifyTheme,
-  Authenticator,
-} from "aws-amplify-react-native";
-import config from "./config";
-Amplify.configure(config);
-
-console.log("This is auth object", Amplify.Auth);
+// import Amplify, { Auth } from "aws-amplify";
+import { Amplify, Auth } from "aws-amplify";
 import { StatusBar } from "react-native";
+import SplashScreen from './Components/SplashScreen';
+
+
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: "us-east-1",
+    userPoolId: "us-east-1_q3YmoFL0h",
+    identityPoolId: "us-east-1:90bf6957-273b-4697-b478-f0afc88ebe5f",
+    userPoolWebClientId: "493lea0ein6jm4m2qcg87es1n6",
+    authenticationFlowType: "USER_SRP_AUTH",
+  },
+});
 
 const Stack = createStackNavigator();
-const ShowComponent = (theme) => {
+
+function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
         <StatusBar backgroundColor="#8FC54B" hidden={true} />
-        <Stack.Navigator initialRouteName="Login" headerMode="none">
+        <Stack.Navigator initialRouteName="splash" headerMode="none">
+
+
+          <Stack.Screen
+            name="splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Home"
             component={HomeScreen}
@@ -73,19 +86,6 @@ const ShowComponent = (theme) => {
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
-  );
-};
-function App() {
-  const theme = {
-    ...AmplifyTheme,
-    container: {
-      flex: 1,
-    },
-  };
-  return (
-    <Authenticator theme={theme} hideDefault={true} hide="Home">
-      <ShowComponent />
-    </Authenticator>
   );
 }
 export default App;

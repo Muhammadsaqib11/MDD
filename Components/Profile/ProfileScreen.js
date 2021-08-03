@@ -9,30 +9,84 @@ import { Input, } from 'native-base'
 import { Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FeatureData from '../Home/FeatureData';
+import DropDownPicker from 'react-native-dropdown-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 const ProfileScreen = ({ navigation }) => {
   const [selecttedvValue, setSelectedValue] = useState('1')
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: 'MDD', value: 'mdd' },
+    { label: 'Legacy', value: 'legacy' },
+  ]);
   const onValueChange = (e) => {
     e.preventDefault();
     const value = e.targer.value;
     setSelectedValue(value)
-    console.log("selected value", selecttedvValue)
+    console.lo
+      ("selected value", selecttedvValue)
+  }
+  const Logout = async () => {
+    AsyncStorage.removeItem("jwt")
+    navigation.navigate("Login")
+
   }
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={styles.BotomSheetHeaderView}>
-        <Text style={styles.BotomSheetHeader}>Select Organization</Text>
-        {/* <Picker
-          mode="dropdown"
-          iosIcon={<Ionicons name="arrow-down" size={20} color='gray' style={HomeStyle.Car_style} />}
-          selectedValue={selecttedvValue}
-          onValueChange={onValueChange}
-        >
-          <Picker.Item label="Wallet" value="key0" />
-          <Picker.Item label="ATM Card" value="key1" />
-          <Picker.Item label="Debit Card" value="key2" />
-          <Picker.Item label="Credit Card" value="key3" />
-          <Picker.Item label="Net Banking" value="key4" />
-        </Picker> */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+          <Text style={styles.BotomSheetHeader}>Select Organization</Text>
+          {Platform.OS === 'ios' ? (
+            <Button rounded
+              style={{ backgroundColor: '#ededed' }}
+              onPress={() => sheetRef.current.snapTo(1)}
+            >
+              <Ionicons name="close" color='gray' size={25} />
+            </Button>) : null}
+
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={{
+              backgroundColor: "#d3dceb",
+              height: 40,
+              width: 350,
+              borderColor: '#d3dceb',
+              borderRadius: 5,
+
+            }}
+
+          />
+          <Button
+            transparent
+            style={styles.changeOrganiztion}
+            onPress={() => sheetRef.current.snapTo(1)}
+          >
+            <Text style={{ color: 'white' }}>Change Organization</Text>
+          </Button>
+        </View>
+        {/* <View>
+          <Button
+            transparent
+            style={styles.changeOrganiztion}
+          // onPress={() => navigation.navigate("Home")}
+          >
+            <Text style={{ color: 'white' }}>Change Organization</Text>
+          </Button>
+
+        </View> */}
+
+
+
       </View>
 
 
@@ -49,7 +103,7 @@ const ProfileScreen = ({ navigation }) => {
   const sheetRef = React.useRef(null);
 
   const RenderItem = ({ item, onPress, backgroundColor, textColor }) => (
-    <ScrollView style={{ backgroundColor: "blue" }}>
+    <ScrollView style={{ flex: 1 }}>
       <TouchableOpacity onPress={onPress} style={HomeStyle.itemFlat} onPress={() => navigation.navigate('Assets')}>
         <Image source={{ uri: item.Image }} style={HomeStyle.Image_style} />
         <View style={{ flexDirection: 'column', }}>
@@ -68,9 +122,10 @@ const ProfileScreen = ({ navigation }) => {
   );
   return (
     <Container>
+
       <BottomSheet
         ref={sheetRef}
-        snapPoints={Platform.OS === "ios" ? [500, 0, 0] : [650, 300, 300]}
+        snapPoints={Platform.OS === "ios" ? [750, 0, 0] : [600, 0, 0]}
         renderContent={renderInner}
         renderHeader={renderHeader}
         initialSnap={1}
@@ -95,7 +150,7 @@ const ProfileScreen = ({ navigation }) => {
         <Button full style={styles.ButtonChangePas}>
           <Text style={{ color: 'black', fontWeight: 'bold' }}>Change Password</Text>
         </Button>
-        <Button full style={styles.LogoutButton} onPress={() => navigation.navigate("Login")}>
+        <Button full style={styles.LogoutButton} onPress={Logout}>
           <Text style={{ color: 'black', fontWeight: 'bold' }}>Logout</Text>
         </Button>
       </Content>

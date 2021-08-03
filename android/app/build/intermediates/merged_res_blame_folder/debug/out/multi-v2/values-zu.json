@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/dev/Documents/original/mddAwsome/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zu/values-zu.xml",
+            "outputFile": "/Users/dev/Documents/original/mddAwesom/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zu/values-zu.xml",
             "map": [
                 {
                     "source": "/Users/dev/.gradle/caches/transforms-2/files-2.1/16fec408ce938816983d0134c390d125/jetified-play-services-base-17.0.0/res/values-zu/values.xml",

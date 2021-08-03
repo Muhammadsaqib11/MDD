@@ -10,22 +10,27 @@ import {
   ActivityIndicator,
 } from "native-base";
 import Loginstyles from "./LoginStyle";
+import { setValue } from "../StorageWraper";
 // import {LoginSuccess} from '../../Redux/Actions/LoginAction'
 import { fetchUsers } from "../../Store/actions/LoginAction";
 import { useSelector, useDispatch } from "react-redux";
-
+import Loader from "../Loader";
 // import config from "../../config";
 import { Auth } from "aws-amplify";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import customAxios from "../../axios.client";
+
 
 function loginScreen({ navigation }) {
-  const [username, setUserName] = useState("");
+  const [username, setUserName] = useState("hamid@mdd.io");
   const [userNameError, setUsernameError] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("Changeme123");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState(null)
   const dispatch = useDispatch();
   const reduxData = useSelector((state) => state);
   // const handleSubmit = () => {
-
   // if (username === '') {
   // console.log("if")
   // setUsernameError("Please Enter User Name")
@@ -45,22 +50,36 @@ function loginScreen({ navigation }) {
   // }
   // Auth.configure(config);
   const SignIn = async () => {
+
     try {
-      const user = await Auth.signIn("hamid@mdd.io", "Changeme123");
-      console.log(user);
+      setLoading(true)
+      const user = await Auth.signIn(username, password);
+
+      const token = user.signInUserSession.idToken.jwtToken;
+      console.log(token)
+      try {
+        await AsyncStorage.setItem('jwt', token)
+
+      } catch (e) {
+        console.log(e)
+      }
+
+      customAxios.get('/profile/hamid@mdd.io')
+        .then(response => {
+          console.log("response", response)
+          setUrl(response)
+          console.log("url", url)
+        })
+        .catch(error => console.log("error", error));
+      // await AsyncStorage.setItem(key, value);
+      // const localStorage = AsyncStorage.setItem("jwt", JSON.stringify(user.signInUserSession.idToken)
+
+      setLoading(false)
+      navigation.navigate('Home')
+
     } catch (error) {
       console.log("error signing in", error);
     }
-    // Auth.signIn({
-    // username: "hamid@mdd.io",
-    // password: "Changeme123",
-    // })
-    // .then((res) => {
-    // console.log("succes for login", res);
-    // })
-    // .catch((err) => {
-    // console.log("error for signIn", err);
-    // });
   };
   return (
     <View style={Loginstyles.mainViewContainer}>
@@ -75,8 +94,9 @@ function loginScreen({ navigation }) {
               style={Loginstyles.inputfield}
               onChangeText={(username) => setUserName(username)}
               defaultValue={username}
+              value={username}
             />
-            {console.log(username)}
+
           </Item>
           <Text style={{ color: "red" }}>{userNameError}</Text>
           <Item regular style={{ marginTop: 10, borderRadius: 5 }}>
@@ -84,7 +104,8 @@ function loginScreen({ navigation }) {
               placeholder="Password"
               style={Loginstyles.inputfield}
               secureTextEntry={true}
-              defaultValue={password}
+              // defaultValue={password}
+              value={password}
               onChangeText={(password) => setPassword(password)}
             />
           </Item>
@@ -97,7 +118,7 @@ function loginScreen({ navigation }) {
           <Button
             transparent
             style={Loginstyles.forgotText}
-            onPress={() => navigation.navigate("forgot")}
+          // onPress={() => navigation.navigate("Home")}
           >
             <Text>Forgot Password ?</Text>
           </Button>
@@ -110,6 +131,7 @@ function loginScreen({ navigation }) {
           <Text style={Loginstyles.textLastTwo}>and Privacy Policy</Text>
         </View>
       </Content>
+      <Loader loading={loading} />
     </View>
   );
 }

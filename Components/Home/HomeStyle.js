@@ -28,6 +28,16 @@ const HomeStyle = StyleSheet.create({
     borderTopRightRadius: 5,
     left: "89%"
   },
+  markerWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
+  },
+  marker: {
+    width: 30,
+    height: 30,
+  },
   mapIcons1: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -149,7 +159,7 @@ const HomeStyle = StyleSheet.create({
 
   },
   ViewTwo: {
-    height: 35,
+    height: 40,
     backgroundColor: "#ECECE7",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -159,6 +169,7 @@ const HomeStyle = StyleSheet.create({
     borderColor: '#cccccc',
     elevation: 5,
     shadowColor: 'gray',
+    paddingTop: Platform.OS === "ios" ? 0 : 7,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -167,28 +178,37 @@ const HomeStyle = StyleSheet.create({
   },
   InputView: {
     width: '80%',
-    height: 38,
-    marginBottom: 20
+    height: 28,
+    marginBottom: 5,
+
   },
   Child_View: {
     flexDirection: "row",
-    marginTop: 2
+    marginTop: 2,
+
   },
   search_Icon: {
     marginLeft: 5,
-    marginTop: 5
+    marginTop: Platform.OS === "ios" ? 5 : -1,
   },
   Input_style: {
-    color: 'gray', marginLeft: 10, fontSize: 14
+    color: 'gray',
+    marginLeft: 10,
+    fontSize: 14,
+    height: 40,
+    paddingTop: 0,
+    marginTop: 1
   },
   Mic_View: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: 40,
-    margin: 6
+    marginTop: Platform.OS === "ios" ? 6 : 1,
+
   },
   Image_style: {
-    width: 120, height: 120, margin: 5
+    width: 120, height: 120, margin: 5,
+    backgroundColor: '#f4f4f4'
   },
   Text_style: {
     fontSize: 16,
@@ -199,12 +219,13 @@ const HomeStyle = StyleSheet.create({
     fontWeight: '500'
   },
   Des_Text: {
-    width: '19%',
+    width: '100%',
     color: 'black',
     backgroundColor: 'white',
     marginLeft: 8,
     marginTop: 5,
-    fontSize: 14
+    fontSize: 10,
+    flexDirection: 'column'
   },
   Car_style: {
     // borderWidth: 0.3,

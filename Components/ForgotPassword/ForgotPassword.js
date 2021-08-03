@@ -39,7 +39,6 @@ function ForgotPassword({ navigation }) {
                             <Right />
                         </Header>
                     ) : null
-
             }
 
 

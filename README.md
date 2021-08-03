@@ -5,3 +5,4 @@
 * open root Directory of App and open terminal
 * run npm install into Root directory of App
 * Navigate to ios Folder than run Pod Install
+

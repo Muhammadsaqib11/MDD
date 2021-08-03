@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/dev/Documents/original/mddAwsome/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy/values-hy.xml",
+            "outputFile": "/Users/dev/Documents/original/mddAwesom/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy/values-hy.xml",
             "map": [
                 {
                     "source": "/Users/dev/.gradle/caches/transforms-2/files-2.1/54448c056128a2c935b0bb4d9a555ae7/appcompat-1.1.0/res/values-hy/values-hy.xml",

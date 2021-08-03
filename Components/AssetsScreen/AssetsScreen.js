@@ -20,8 +20,13 @@ const region = {
     latitudeDelta: 0.04864195044303443,
     longitudeDelta: 0.040142817690068,
 }
-const AssetsScreen = ({ navigation }) => {
+const AssetsScreen = ({ navigation, route }) => {
+    const { itemId } = route.params;
+    const { otherParam } = route.params;
+
     const [state, setState] = React.useState(region);
+    const [asset, setAsses] = React.useState(otherParam)
+    console.log("asset", asset)
     const renderInner = () => (
         <View style={styles.panel}>
             <View style={styles.item}>
@@ -30,14 +35,22 @@ const AssetsScreen = ({ navigation }) => {
                         fontSize: 14,
                         marginTop: 15,
                         fontWeight: 'bold'
-                    }} >U 2015 Audi S4 Prestige </Text>
-                    <Button rounded style={styles.Button_style}>
+                    }} >{asset && asset.title}</Text>
+                    <Button rounded style={styles.Button_style}
+                        onPress={() => navigation.navigate('Home')}
+                    >
                         <Ionicons name="close" color='gray' size={15} />
                     </Button>
                 </View>
-                <Text numberOfLines={1} style={{ fontSize: 10, fontWeight: 'bold' }} >
-                    abdjskajakkakakakakakakakakakkakakakakakakakkakakak
-                </Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 12, marginHorizontal: 3 }}>{asset && asset.subtitles[0].value} | </Text>
+                    <Text style={{ fontSize: 12, marginHorizontal: 3 }}>{asset && asset.subtitles[1].value} | </Text>
+                    <Text style={{ fontSize: 12, marginHorizontal: 3 }}>{asset && asset.subtitles[2].value} | </Text>
+                    <Text style={{ fontSize: 12, marginHorizontal: 3 }}>{asset && asset.subtitles[3].value}</Text>
+
+                </View>
+
+
                 <View style={{ flexDirection: 'row', marginTop: 10, }}>
                     <Button style={styles.FindTag_button} >
                         <Text style={{ color: "white" }} >Find- Scan for tag</Text>
@@ -52,7 +65,7 @@ const AssetsScreen = ({ navigation }) => {
                     </Button>
                 </View>
 
-                <Image source={{ uri: "https://cdn.pixabay.com/photo/2015/05/28/23/12/auto-788747_960_720.jpg" }}
+                <Image source={require("../../Assets/Img/mdd.png")}
                     style={styles.Image_Style} />
 
             </View>
@@ -81,11 +94,11 @@ const AssetsScreen = ({ navigation }) => {
                 style={styles.MapView}
             >
                 <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
-                    <FontAwesome name="key" size={40} color="red" />
+                    <FontAwesome name="car" size={40} color="red" />
                 </Marker>
             </MapView>
             <View style={styles.mapIcons} >
-                <Ionicons name="ios-information-circle-outline" size={20} color="blue" onPress={() => navigation.navigate('dealership')} />
+                <Ionicons name="ios-information-circle-outline" size={20} color="blue" onPress={() => navigation.navigate('Profile')} />
             </View>
             <View style={styles.mapIcons1}>
                 <Feather name="navigation" size={20} color="blue" />

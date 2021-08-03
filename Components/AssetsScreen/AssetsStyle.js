@@ -161,9 +161,10 @@ const styles = StyleSheet.create({
     },
     Image_Style: {
         width: "100%",
-        height: Platform.OS === "ios" ? 240 : 200,
-        marginTop: 10,
-        borderRadius: 3
+        height: Platform.OS === "ios" ? 190 : 120,
+        marginTop: 0,
+        borderRadius: 3,
+        resizeMode: 'contain'
     }
 
 })

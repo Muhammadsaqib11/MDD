@@ -15,7 +15,7 @@ function PairingScreen({ navigation }) {
                 <Header style={{ backgroundColor: 'white' }}>
                     <StatusBar backgroundColor="#8FC54B" hidden={false} barStyle="light-content" />
                     <Left>
-                        <Button transparent onPress={() => navigation.push('Login')}>
+                        <Button transparent onPress={() => navigation.push('Home')}>
 
                             <Icon name='arrow-back' style={{ color: 'black', fontSize: 20 }} />
 

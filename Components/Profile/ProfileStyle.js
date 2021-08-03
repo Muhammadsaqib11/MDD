@@ -3,7 +3,7 @@ const styles = StyleSheet.create({
     panel: {
         height: Platform.OS === "ios" ? 730 : 600,
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#ededed',
     },
     ViewTwo: {
         height: 35,
@@ -26,12 +26,24 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 2
     },
+    changeOrganiztion: {
+        marginHorizontal: '21%',
+        marginTop: 20,
+        paddingLeft: 10,
+        color: 'white',
+        width: '60%',
+        backgroundColor: '#8FC54B',
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
+    },
     search_Icon: {
         marginLeft: 5,
         marginTop: 5
     },
     BotomSheetHeaderView: {
-        width: '80%',
+        width: '100%',
         height: 38,
         marginBottom: 20,
     },

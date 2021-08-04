@@ -19,6 +19,16 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         left: "89%"
     },
+    markerWrap: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: 50,
+        height: 50,
+    },
+    marker: {
+        width: 48,
+        height: 48,
+    },
     mapIcons1: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -55,6 +65,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    markerFixed: {
+        left: '50%',
+        marginLeft: -24,
+        marginTop: -48,
+        position: 'absolute',
+        top: '50%'
     },
     box: {
         width: IMAGE_SIZE,
@@ -164,7 +181,7 @@ const styles = StyleSheet.create({
         height: Platform.OS === "ios" ? 190 : 120,
         marginTop: 0,
         borderRadius: 3,
-        resizeMode: 'contain'
+
     }
 
 })

@@ -19,36 +19,26 @@ import Loader from "../Loader";
 import { Auth } from "aws-amplify";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import customAxios from "../../axios.client";
-
-
 function loginScreen({ navigation }) {
-  const [username, setUserName] = useState("hamid@mdd.io");
+  const [username, setUserName] = useState("");
   const [userNameError, setUsernameError] = useState("");
-  const [password, setPassword] = useState("Changeme123");
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState(null)
   const dispatch = useDispatch();
   const reduxData = useSelector((state) => state);
-  // const handleSubmit = () => {
-  // if (username === '') {
-  // console.log("if")
-  // setUsernameError("Please Enter User Name")
-  // }
-  // else if (password === '') {
-  // console.log("else")
-  // setPasswordError("Please Enter password")
-  // }
-  // else {
-  // console.log("else", username, password)
-  // setTimeout(() => {
-  // console.log("dealer")
-  // dispatch(fetchUsers({ username, password }))
-  // navigation.navigate('Home')
-  // }, 1000);
-  // }
-  // }
-  // Auth.configure(config);
+
+  const handleChangeUserName = (event) => {
+    const value = event.target.value;
+    console.log("value", value)
+    setUserName(value)
+    console.log(username)
+  }
+  const handleChangePassword = (event) => {
+    const value = event.target.value;
+    setPassword(value)
+  }
   const SignIn = async () => {
 
     try {
@@ -61,6 +51,7 @@ function loginScreen({ navigation }) {
         await AsyncStorage.setItem('jwt', token)
 
       } catch (e) {
+        setLoading(false)
         console.log(e)
       }
 
@@ -81,6 +72,7 @@ function loginScreen({ navigation }) {
       console.log("error signing in", error);
     }
   };
+
   return (
     <View style={Loginstyles.mainViewContainer}>
       <View style={Loginstyles.mainView}>
@@ -92,9 +84,9 @@ function loginScreen({ navigation }) {
             <Input
               placeholder="Username"
               style={Loginstyles.inputfield}
-              onChangeText={(username) => setUserName(username)}
-              defaultValue={username}
               value={username}
+              onChangeText={(username) => setUserName(username)}
+              autoCapitalize='none'
             />
 
           </Item>
@@ -104,9 +96,9 @@ function loginScreen({ navigation }) {
               placeholder="Password"
               style={Loginstyles.inputfield}
               secureTextEntry={true}
-              // defaultValue={password}
               value={password}
               onChangeText={(password) => setPassword(password)}
+              autoCapitalize='none'
             />
           </Item>
           <Text style={{ color: "red" }}>{passwordError}</Text>

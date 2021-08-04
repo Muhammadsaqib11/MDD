@@ -9,6 +9,8 @@ import ResetPassword from "./Components/ForgotPassword/ResetPassword";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import AssetsScreen from "./Components/AssetsScreen/AssetsScreen";
 import ProfileScreen from "./Components/Profile/ProfileScreen";
+import ExploreScreen from './Components/Map/Map'
+import SearchCar from "./Components/SearchCar/SearchCars";
 import { Provider } from "react-redux";
 import store from "./Store";
 // import Amplify, { Auth } from "aws-amplify";
@@ -41,6 +43,11 @@ function App() {
           <Stack.Screen
             name="splash"
             component={SplashScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="explore"
+            component={ExploreScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

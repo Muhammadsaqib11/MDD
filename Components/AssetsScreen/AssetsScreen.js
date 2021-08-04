@@ -4,28 +4,47 @@ import {
     StyleSheet,
     View,
     Text,
-    FlatList, TouchableOpacity
+    FlatList, TouchableOpacity,
+    Animated
 } from 'react-native'
 import BottomSheet from 'reanimated-bottom-sheet'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons//Feather'
-import MapView, { PROVIDER_GOOGLE, Geojson, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Geojson, Marker, PROVIDER_DEFAULT } from "react-native-maps";
 import styles from './AssetsStyle'
 import { Button } from 'native-base'
 import markers from './MapArray'
-const region = {
-    latitude: 40.7353454,
-    longitude: -73.9994384,
-    latitudeDelta: 0.04864195044303443,
-    longitudeDelta: 0.040142817690068,
-}
+// const region = {
+//     latitude: 44.972795,
+//     longitude: -93.479389,
+//     latitudeDelta: 0.04864195044303443,
+//     longitudeDelta: 0.040142817690068,
+// }
 const AssetsScreen = ({ navigation, route }) => {
     const { itemId } = route.params;
     const { otherParam } = route.params;
 
     const [state, setState] = React.useState(region);
     const [asset, setAsses] = React.useState(otherParam)
+    const [region, setRegion] = React.useState(asset.location.coordinates)
+    console.log("region", region)
+    const [latitude, setLatitude] = React.useState(asset.location.coordinates.lat)
+    console.log("latitude", latitude)
+
+
+
+    const [longitude, setLongitude] = React.useState(asset.location.coordinates.lon)
+    console.log("longitude", longitude)
+
+    const DeltaRegion = {
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1,
+
+    }
+
     console.log("asset", asset)
     const renderInner = () => (
         <View style={styles.panel}>
@@ -64,10 +83,12 @@ const AssetsScreen = ({ navigation, route }) => {
                         <Text style={{ marginRight: 10, fontWeight: 'bold' }} >CAR</Text>
                     </Button>
                 </View>
-
-                <Image source={require("../../Assets/Img/mdd.png")}
+                {console.log("image", asset.image)}
+                <Image
+                    source={asset.image
+                        ? { uri: asset.image.replace('http', 'https') }
+                        : require('../../Assets/Img/mdd.png')}
                     style={styles.Image_Style} />
-
             </View>
         </View>
     )
@@ -90,11 +111,24 @@ const AssetsScreen = ({ navigation, route }) => {
                 enabledInnerScrolling
             />
             <MapView
-                initialRegion={region}
+                initialRegion={DeltaRegion}
                 style={styles.MapView}
+
+                // mapType="standard"
+                zoomEnabled={true}
+            // pitchEnabled={true}
+            // showsUserLocation={true}
+            // followsUserLocation={true}
+            // showsCompass={true}
+            // showsBuildings={true}
+            // showsTraffic={true}
+            // showsIndoors={true}
             >
-                <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
-                    <FontAwesome name="car" size={40} color="red" />
+                <Marker coordinate={{ latitude: DeltaRegion.latitude, longitude: DeltaRegion.longitude }}>
+                    {/* <FontAwesome name="car" size={40} color="red" /> */}
+                    <Animated.View style={[styles.markerWrap]}>
+                        <FontAwesome name="car" size={20} color="red" style={styles.marker} />
+                    </Animated.View>
                 </Marker>
             </MapView>
             <View style={styles.mapIcons} >
@@ -103,7 +137,7 @@ const AssetsScreen = ({ navigation, route }) => {
             <View style={styles.mapIcons1}>
                 <Feather name="navigation" size={20} color="blue" />
             </View>
-        </View>
+        </View >
     )
 }
 export default AssetsScreen;

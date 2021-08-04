@@ -20,7 +20,7 @@ const region = {
   latitudeDelta: 0.04864195044303443,
   longitudeDelta: 0.040142817690068,
 }
-const HomeScreen = () => {
+const SearchCar = () => {
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={{
@@ -138,10 +138,9 @@ const HomeScreen = () => {
       </View>
       <View style={HomeStyle.mapIcons1}>
         <FontAwesome name="location-arrow" size={20} color="blue" />
-
       </View>
       <View style={HomeStyle.mapPlusIcon} >
-        <AntDesign name="pluscircle" size={40} color="#8AC833" onPress={() => navigation.navigate('pairingScreen')} />
+        {/* <AntDesign name="pluscircle" size={40} color="#8AC833" onPress={() => navigation.navigate('pairingScreen')} /> */}
 
       </View>
 
@@ -149,7 +148,7 @@ const HomeScreen = () => {
   )
 
 }
-export default HomeScreen;
+export default SearchCar;
 const IMAGE_SIZE = 200
 
 const styles = StyleSheet.create({

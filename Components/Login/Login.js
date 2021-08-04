@@ -46,7 +46,7 @@ function loginScreen({ navigation }) {
       const user = await Auth.signIn(username, password);
 
       const token = user.signInUserSession.idToken.jwtToken;
-      console.log(token)
+
       try {
         await AsyncStorage.setItem('jwt', token)
 
@@ -70,6 +70,8 @@ function loginScreen({ navigation }) {
 
     } catch (error) {
       console.log("error signing in", error);
+      setLoading(false)
+      alert(error.message)
     }
   };
 

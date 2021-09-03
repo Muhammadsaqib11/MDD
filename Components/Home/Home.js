@@ -14,6 +14,9 @@ import {
 import BottomSheet from 'reanimated-bottom-sheet'
 import HomeStyle from '../Home/HomeStyle';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
+
 import FeatureData from '../Home/FeatureData'
 import MapView, { Marker } from "react-native-maps";
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -56,7 +59,6 @@ const HomeScreen = ({ navigation }) => {
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
   const [zoom, setZoom] = useState(15)
-
   const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
@@ -74,7 +76,9 @@ const HomeScreen = ({ navigation }) => {
 
   }, [])
 
+  const SearchData = () => {
 
+  }
 
   useEffect(() => {
     console.log("filterData", filterData)
@@ -111,80 +115,43 @@ const HomeScreen = ({ navigation }) => {
     }
   }
 
-
-  // console.log("inventory", inventory)
-  const renderInner = () => (
-    <View style={HomeStyle.panel}>
-      <View style={HomeStyle.ViewTwo}>
-        <View style={HomeStyle.Child_View} >
-          <Ionicons style={HomeStyle.search_Icon}
-            name="search" size={20} color="gray" />
-          <View style={HomeStyle.InputView}>
-            <Input
-              placeholder="Search here"
-              placeholderTextColor="gray"
-              style={HomeStyle.Input_style}
-              autoCapitalize='none'
-              defaultValue={search}
-              value={search}
-              onChangeText={(text) => searchFilter(text)}
-            />
-          </View>
-        </View>
-        <View style={HomeStyle.Mic_View}>
-          <Ionicons name="mic" size={20} color='gray' />
-        </View>
-      </View>
-
-      <View style={{ flex: 1, marginTop: 10 }}>
-
-        <FlatList
-          data={filterData}
-          renderItem={(index) => RenderItem(index)}
-          keyExtractor={(item, index) => item.id}
-          ListEmptyComponent={ListEmptyView}
-
-        // index={index}
-        />
-      </View>
-
-    </View>
-  )
-
   const bs = React.createRef()
   const RenderItem = ({ item, index, backgroundColor, textColor }) => (
-    <ScrollView >
-      <View style={{ flex: 1, height: 120, overflow: 'scroll' }}>
-        <TouchableOpacity style={HomeStyle.itemFlat} onPress={() => FetchAssetData(index)}>
-          <Image
-            // source={{ uri: item.image.replace('http', 'https') }} 
-            source={item.image
-              ? { uri: item.image.replace('http', 'https') }
-              : require('../../Assets/Img/mdd.png')}
-            style={{ height: 70, width: 70, resizeMode: 'contain', marginTop: 15 }} />
 
-          {/* <Image source={require("../../Assets/Img/mdd.png")} /> */}
-          <View style={{ flexDirection: 'column', marginTop: 10 }}>
-            {/* {console.log("title", item.title)} */}
-            <Text numberOfLines={1} style={{ color: 'black', width: '120%' }} > {item.title} </Text>
-            {
-              item && item.subtitles.map((sub, index) => {
-                return (
+    <View style={{ flex: 1, height: 120 }}>
+      <TouchableOpacity style={HomeStyle.itemFlat} onPress={() => FetchAssetData(index)}>
+        <Image
+          // source={{ uri: item.image.replace('http', 'https') }} 
+          source={item.image
+            ? { uri: item.image.replace('http', 'https') }
+            : require('../../Assets/Img/mdd.png')}
+          style={{ height: 70, width: 70, resizeMode: 'contain', marginTop: 15 }} />
 
-                  <Text numberOfLines={1} style={HomeStyle.Des_Text} >
-                    {sub.display} : {sub.value}
-                  </Text>
-                )
-              })
-            }
-            {/* <View style={{ flexDirection: 'row', marginTop: 10, }}>
+        {/* <Image source={require("../../Assets/Img/mdd.png")} /> */}
+        <View style={{ flexDirection: 'column', marginTop: 10 }}>
+          {/* {console.log("title", item.title)} */}
+          <Text numberOfLines={1} style={{ color: 'black', width: '120%' }} > {item.title} </Text>
+          {
+            item && item.subtitles.map((sub, index) => {
+              return (
+
+                <Text numberOfLines={1} style={HomeStyle.Des_Text} >
+                  {sub.display} : {sub.value}
+                </Text>
+              )
+            })
+          }
+          {/* <View style={{ flexDirection: 'row', marginTop: 10, }}>
             <Ionicons name="car" size={20} color='gray' style={HomeStyle.Car_style} />
             <Ionicons name="key" size={20} color='gray' style={HomeStyle.Key_style} />
           </View> */}
-          </View>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        </View>
+      </TouchableOpacity>
+
+    </View>
+
+
+
   );
   const ListEmptyView = () => {
     return (
@@ -194,81 +161,25 @@ const HomeScreen = ({ navigation }) => {
 
     );
   }
-  const interpolations = inventory && inventory.location && inventory.location.map((marker, index) => {
-    const inputRange = [
-      (index - 1) * CARD_WIDTH,
-      index * CARD_WIDTH,
-      ((index + 1) * CARD_WIDTH),
-    ];
-
-    const scale = mapAnimation.interpolate({
-      inputRange,
-      outputRange: [1, 1.5, 1],
-      extrapolate: "clamp"
-    });
-
-    return { scale };
-  });
-
-
-  return (
-    <View style={HomeStyle.container}>
-      <StatusBar backgroundColor="#8FC54B" hidden={false} barStyle="dark-content" />
-      {/* <BottomSheet
-        ref={bs}
-        snapPoints={Platform.OS === "ios" ? [800, 385, 385] : [650, 300, 300]}
-        renderContent={renderInner}
-        // renderHeader={renderHeader}
-        initialSnap={1}
-        enabledContentGestureInteraction={false}
-      /> */}
-
-      <MapView
-        initialRegion={{
-          latitude: 44.972578,
-          longitude: -93.4797703,
-          latitudeDelta: 0.3,
-          longitudeDelta: 0.4,
-        }}
-        minZoomLevel={13}
-        maxZoomLevel={80}
-        zoomEnabled={true}
-        followUserLocation={true}
-        style={HomeStyle.MapView}
-        onRegionChangeComplete={(initialRegion) => {
-          setZoom(Math.round(Math.log(360 / initialRegion.latitudeDelta) / Math.LN2))
-        }}
-      >
-        {filterData && filterData.map((marker, index) => (
-          <Marker
-            coordinate={{ latitude: marker.location.coordinates.lat, longitude: marker.location.coordinates.lon }}
-          // onPress={(e) => onMarkerPress(e)}
-          >
-            {console.log("akjlhdsflkja")}
-
-            <Animated.View style={[HomeStyle.markerWrap]}>
-              <Animated.Image
-                source={require('../../Assets/Img/marker.png')}
-                style={[HomeStyle.marker]}
-                resizeMode="cover"
-              />
-            </Animated.View>
-          </Marker>
-        ))}
-
-      </MapView>
-
-      <View style={HomeStyle.mapIcons} >
-        <Ionicons name="ios-information-circle-outline" size={20} color="blue" onPress={() => navigation.navigate('Profile')} />
-
-      </View>
-      <View style={HomeStyle.mapIcons1}>
-        <Entypo name="plus" size={30} color="#8AC833" style={{ fontWeight: 'bold' }} onPress={() => navigation.navigate('pairingScreen')} />
-
-      </View>
+  // console.log("inventory", inventory)
+  const renderInner = () => (
+    <SafeAreaView>
 
       <View style={HomeStyle.panel}>
+        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
+          <AntDesign
+            name="down" size={20} color="gray"
+            onPress={() => bs.current.snapTo(1)} />
+
+          <AntDesign
+            name="up" size={20} color="gray"
+            onPress={() => bs.current.snapTo(0)}
+          />
+
+
+        </View>
         <View style={HomeStyle.ViewTwo}>
+
           <View style={HomeStyle.Child_View} >
             <Ionicons style={HomeStyle.search_Icon}
               name="search" size={20} color="gray" />
@@ -296,12 +207,119 @@ const HomeScreen = ({ navigation }) => {
             renderItem={(index) => RenderItem(index)}
             keyExtractor={(item, index) => item.id}
             ListEmptyComponent={ListEmptyView}
+            scrollEnabled={true}
 
           // index={index}
           />
         </View>
 
       </View>
+    </SafeAreaView>
+  )
+
+
+  const interpolations = inventory && inventory.location && inventory.location.map((marker, index) => {
+    const inputRange = [
+      (index - 1) * CARD_WIDTH,
+      index * CARD_WIDTH,
+      ((index + 1) * CARD_WIDTH),
+    ];
+
+    const scale = mapAnimation.interpolate({
+      inputRange,
+      outputRange: [1, 1.5, 1],
+      extrapolate: "clamp"
+    });
+    return { scale };
+  });
+  const renderHeader = () => (
+    <View style={HomeStyle.header}>
+      <View style={HomeStyle.panelHeader}>
+        {/* <View style={HomeStyle.panelHandle}
+        /> */}
+      </View>
+    </View>
+  )
+  return (
+    <View style={HomeStyle.container}>
+      <StatusBar backgroundColor="#8FC54B" hidden={false} barStyle="dark-content" />
+      <BottomSheet
+        ref={bs}
+        snapPoints={Platform.OS === "ios" ? [800, 385, 385] : [650, 300, 300]}
+        renderContent={renderInner}
+        renderHeader={renderHeader}
+        initialSnap={1}
+        enabledContentGestureInteraction={false}
+        scrollEnabled={true}
+      />
+      <MapView
+        initialRegion={{
+          latitude: 44.972578,
+          longitude: -93.4797703,
+          latitudeDelta: 0.3,
+          longitudeDelta: 0.4,
+        }}
+        minZoomLevel={13}
+        maxZoomLevel={80}
+        zoomEnabled={true}
+        followUserLocation={true}
+        style={HomeStyle.MapView}
+        onRegionChangeComplete={(initialRegion) => {
+          setZoom(Math.round(Math.log(360 / initialRegion.latitudeDelta) / Math.LN2))
+        }}
+      >
+        {filterData && filterData.map((marker, index) => (
+          <Marker
+            coordinate={{ latitude: marker.location.coordinates.lat, longitude: marker.location.coordinates.lon }}
+          >
+            <Animated.View style={[HomeStyle.markerWrap]}>
+              <Animated.Image
+                source={require('../../Assets/Img/marker.png')}
+                style={[HomeStyle.marker]}
+                resizeMode="cover"
+              />
+            </Animated.View>
+          </Marker>
+        ))}
+
+      </MapView>
+
+      <View style={HomeStyle.mapIcons} >
+        <Ionicons name="ios-information-circle-outline" size={20} color="blue" onPress={() => navigation.navigate('Profile')} />
+
+      </View>
+      <View style={HomeStyle.mapIcons1}>
+        <Entypo name="plus" size={30} color="#8AC833" style={{ fontWeight: 'bold' }} onPress={() => navigation.navigate('pairingScreen')} />
+
+      </View>
+      {/* 
+      <View style={HomeStyle.panel}>
+        <View style={HomeStyle.ViewTwo}>
+          <View style={HomeStyle.Child_View} >
+            <Ionicons style={HomeStyle.search_Icon}
+              name="search" size={20} color="gray" />
+            <View style={HomeStyle.InputView}>
+              <Input
+                placeholder="Search here"
+                placeholderTextColor="gray"
+                style={HomeStyle.Input_style}
+                autoCapitalize='none'
+                defaultValue={search}
+                value={search}
+                onChangeText={(text) => searchFilter(text)}
+              />
+            </View>
+          </View>
+          <View style={HomeStyle.Mic_View}>
+            <Ionicons name="mic" size={20} color='gray' />
+          </View>
+        </View>
+
+        <View style={{ flex: 1, marginTop: 10 }}>
+
+        </View>
+
+      </View> */}
 
     </View>
   )

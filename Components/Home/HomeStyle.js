@@ -97,7 +97,7 @@ const HomeStyle = StyleSheet.create({
   },
   panel: {
     height: Platform.OS === "ios" ? 730 : 600,
-    padding: 20,
+    padding: 10,
     backgroundColor: 'white',
   },
   header: {

@@ -11,7 +11,7 @@ import {
 } from "native-base";
 import Loginstyles from "./LoginStyle";
 import { setValue } from "../StorageWraper";
-// import {LoginSuccess} from '../../Redux/Actions/LoginAction'
+import { LoginSuccess } from '../../Redux/Actions/LoginAction'
 import { fetchUsers } from "../../Store/actions/LoginAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Loader";
@@ -20,9 +20,9 @@ import { Auth } from "aws-amplify";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import customAxios from "../../axios.client";
 function loginScreen({ navigation }) {
-  const [username, setUserName] = useState("");
+  const [username, setUserName] = useState("hamid@mdd.io");
   const [userNameError, setUsernameError] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("Changeme123");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState(null)
@@ -40,12 +40,13 @@ function loginScreen({ navigation }) {
     setPassword(value)
   }
   const SignIn = async () => {
-
     try {
       setLoading(true)
       const user = await Auth.signIn(username, password);
 
       const token = user.signInUserSession.idToken.jwtToken;
+      dispatch(LoginSuccess(user.signInUserSession.idToken.jwtToken))
+
 
       try {
         await AsyncStorage.setItem('jwt', token)

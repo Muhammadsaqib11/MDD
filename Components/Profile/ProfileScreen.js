@@ -12,8 +12,6 @@ import FeatureData from '../Home/FeatureData';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const ProfileScreen = ({ navigation }) => {
   const [selecttedvValue, setSelectedValue] = useState('1')
   const [open, setOpen] = useState(false);
@@ -129,7 +127,8 @@ const ProfileScreen = ({ navigation }) => {
         renderContent={renderInner}
         renderHeader={renderHeader}
         initialSnap={1}
-        enabledContentGestureInteraction={false}
+        enabledContentGestureInteraction={true}
+
       />
       <Header style={{ backgroundColor: 'white' }}>
         <StatusBar backgroundColor="#8FC54B" hidden={false} barStyle="light-content" />
